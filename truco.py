@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*- 
 import random
 
+from symbol import eval_input
+
 class Card():
     """Prototype class for Card"""
     def __init__(self, suit, value=None):
@@ -246,7 +248,7 @@ class Player(object):
 
     def throw_card(self, match, card_position=1):
         card = self.hand.throw_card(card_position)
-        print "\n\t" + self.player_name + " jogou a carta " + str(card)
+        print("\n\t" + self.player_name + " jogou a carta " + str(card))
         match.receive_card(self, card)
 
 class Pair(object):
@@ -285,13 +287,12 @@ class Game(object):
         else:
             self.score[Pair.PAIR_TWO_ID] += self.current_match.state.get_points()
     
-        print "Fim da partida"
+        print ("Fim da partida")
         self.print_score()
         self.__next_match()
 
     def colect_cards(self):
-        print
-        print "Recolhendo cartas..."
+        print("Recolhendo cartas...")
         self.colect_round_cards()
         self.colect_players_cards()
 
@@ -314,11 +315,11 @@ class Game(object):
         self.current_match.start_match()
 
     def print_score(self):
-        print "Pontos\n"
-        print "Dupla 1"
-        print self.score[Pair.PAIR_ONE_ID]
-        print "Dupla 2"
-        print self.score[Pair.PAIR_TWO_ID]
+        print("Pontos\n")
+        print("Dupla 1")
+        print(self.score[Pair.PAIR_ONE_ID])
+        print("Dupla 2")
+        print(self.score[Pair.PAIR_TWO_ID])
 
 
 class Round:
@@ -468,9 +469,7 @@ class NormalMatch(MatchState):
 class Match:
     
     def __init__(self, game):
-        print
-        print "\tIniciando uma nova partida"
-        print
+        print("\tIniciando uma nova partida")
         self.game = game
         self.current_round = Round(self)
         self.rounds = []
@@ -501,7 +500,7 @@ class Match:
             self.end_current_round()
 
     def end_current_round(self):
-        print "\n \t \t Fim da rodada \n"
+        print("\n \t \t Fim da rodada \n")
         winner = self.current_round.end_round()
         self.rounds_winners.append(winner)
         self.rounds.append(self.current_round)
@@ -549,7 +548,7 @@ class Match:
         return accept
 
     def __get_pair_answer(self, message):
-        answer = raw_input(message + "\n" + "S - Sim/ N - Nao\n").lower()  
+        answer = eval_input(message + "\n" + "S - Sim/ N - Nao\n").lower()  
         if(answer == "s" or answer == "sim"):
             accept = True
         else:
